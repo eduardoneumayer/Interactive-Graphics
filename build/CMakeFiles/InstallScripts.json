@@ -1,0 +1,14 @@
+{
+	"InstallScripts" : 
+	[
+		"C:/Users/jacad/Documents/ESTAGIO/Interactive-Graphics/build/cmake_install.cmake",
+		"C:/Users/jacad/Documents/ESTAGIO/Interactive-Graphics/build/src/cmake_install.cmake",
+		"C:/Users/jacad/Documents/ESTAGIO/Interactive-Graphics/build/external/cmake_install.cmake",
+		"C:/Users/jacad/Documents/ESTAGIO/Interactive-Graphics/build/external/glad/cmake_install.cmake",
+		"C:/Users/jacad/Documents/ESTAGIO/Interactive-Graphics/build/external/glfw/cmake_install.cmake",
+		"C:/Users/jacad/Documents/ESTAGIO/Interactive-Graphics/build/external/glfw/src/cmake_install.cmake",
+		"C:/Users/jacad/Documents/ESTAGIO/Interactive-Graphics/build/external/glm/cmake_install.cmake",
+		"C:/Users/jacad/Documents/ESTAGIO/Interactive-Graphics/build/external/glm/glm/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

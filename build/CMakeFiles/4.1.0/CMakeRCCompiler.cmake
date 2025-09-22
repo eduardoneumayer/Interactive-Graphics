@@ -1,0 +1,6 @@
+set(CMAKE_RC_COMPILER "C:/Users/jacad/Documents/ESTAGIO/environ2/sources/.conan/data/env-mingw/12.2/environ/test/package/ca33edce272a279b24f87dc0d4cf5bbdcffbc187/bin/windres.exe")
+set(CMAKE_RC_COMPILER_ARG1 "")
+set(CMAKE_RC_COMPILER_LOADED 1)
+set(CMAKE_RC_SOURCE_FILE_EXTENSIONS rc;RC)
+set(CMAKE_RC_OUTPUT_EXTENSION .obj)
+set(CMAKE_RC_COMPILER_ENV_VAR "RC")
