@@ -1,2 +1,0 @@
-C:\Users\jacad\Documents\ESTAGIO\environ2\sources\.conan\data\env-mingw\12.2\environ\test\package\ca33edce272a279b24f87dc0d4cf5bbdcffbc187\bin\ar.exe qc ..\..\..\bin\Debug\lib\libglm.a CMakeFiles/glm.dir/detail/glm.cpp.obj
-C:\Users\jacad\Documents\ESTAGIO\environ2\sources\.conan\data\env-mingw\12.2\environ\test\package\ca33edce272a279b24f87dc0d4cf5bbdcffbc187\bin\ranlib.exe ..\..\..\bin\Debug\lib\libglm.a

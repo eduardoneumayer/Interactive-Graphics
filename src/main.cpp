@@ -2,6 +2,8 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include "graphics/renderer/Shader.hpp"
+#include "graphics/renderer/VertexBuffer.hpp"
+#include "graphics/renderer/VertexArray.hpp"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
@@ -43,8 +45,8 @@ int main()
         return -1;
     }    
 
+    // inicializando shaderProgram (seu construtor ja é inicializado junto com tudo que está nele)
     Shader shaderProgram;
-
 
     float vertices[] = {
         0.5f, 0.5f, 0.0f,
@@ -57,18 +59,16 @@ int main()
         -0.8f,  0.5f, 0.0f   // top left
     };
 
-    unsigned int VBO;
-    glGenBuffers(1, &VBO);   // gerando o nosso vertex buffer object
+    // inicializando e bindando vao
+    VAO VAO;
+    VAO.Bind();
 
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);  // bindando o nosso VBO criado no target GLARRAYBUFFER
+    // inicializando e linkando vbo em vao
+    VBO VBO(vertices,sizeof(vertices));
+    VAO.LinkVBO(VBO, 0);
 
-    // copiando os dados dos vertices a serem espelhados para o buffer criado anteriormente
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-    //VAO
-    unsigned int VAO;
-    glGenVertexArrays(1, &VAO);
-
+    VAO.Unbind();
+    VBO.Unbind();
 
     // render loop
     // -----------
@@ -82,20 +82,10 @@ int main()
         // ------
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
-
-        // drawing
-        // -------
-        glBindVertexArray(VAO);
-        glBindBuffer(GL_ARRAY_BUFFER, VBO);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-        //dizer ao opengl como ele vai interpretar os dados dos vertices
-        glVertexAttribPointer(0,3,GL_FLOAT, GL_FALSE, 3*sizeof(float), (void*)0);
-        glEnableVertexAttribArray(0);
         
+        // ativa o shader program e desenha com o vao
         shaderProgram.Activate();
-
-        glBindVertexArray(VAO);
+        VAO.Bind();
         glDrawArrays(GL_TRIANGLES, 0, 6);
 
 
@@ -107,6 +97,11 @@ int main()
 
     // glfw: terminate, clearing all previously allocated GLFW resources.
     // ------------------------------------------------------------------
+
+    shaderProgram.Delete();
+    VBO.Delete();
+    VAO.Delete();
+
     glfwTerminate();
     return 0;
 }

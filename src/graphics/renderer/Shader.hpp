@@ -8,6 +8,7 @@ class Shader
     public:
         GLuint ID;
         Shader();
+        ~Shader();
         
         void Activate();
         void Delete();

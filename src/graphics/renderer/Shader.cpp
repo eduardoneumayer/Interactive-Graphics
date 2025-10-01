@@ -4,6 +4,7 @@
 
 Shader::Shader()
 {
+    std::cout << "Shader called" << std::endl;
 
     //enquanto estamos fazendo tudo na main, armazenaremos o conteudo do vertex shader aqui.
     const char *vertexShaderSource = "#version 330 core\n"
@@ -29,6 +30,8 @@ Shader::Shader()
         std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
     }
 
+    std::cout << "Vertex Shader compilled" << std::endl;
+
 
     // mesmo esquema de inicializacao para o fragment shader
     const char *fragmentShaderSource = "#version 330 core\n"
@@ -49,6 +52,8 @@ Shader::Shader()
         std::cout << "ERROR::PROGRAM::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
     }
 
+    std::cout << "Fragment Shader compilled" << std::endl;
+
     // Shader program, linkando os dois shaders 
     ID = glCreateProgram();
 
@@ -62,6 +67,14 @@ Shader::Shader()
         glGetProgramInfoLog(ID, 512, NULL, infoLog);
         std::cout << "ERROR::PROGRAM::COMPILATION_FAILED\n" << infoLog << std::endl;
     }
+
+    std::cout << "Shader Program compilled" << std::endl;
+
+}
+
+Shader::~Shader()
+{
+    std::cout << "Shader Destructor called " << '\n';
 }
 
 void Shader::Activate()
