@@ -1,6 +1,30 @@
 [
 {
   "directory": "C:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -IC:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/src -IC:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/external/glad/include -IC:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/external/glfw/include -IC:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/external/glm/include -IC:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/external/glm -g -g -O0 -Wall -Werror -D_CRT_SECURE_NO_WARNINGS -DDEBUG -std=gnu++23 -o src\\CMakeFiles\\InteractiveGraphicsCourse.dir\\graphics\\renderer\\Shader.cpp.obj -c C:\\Users\\efcneumayer\\Documents\\introcg\\Interactive-Graphics\\src\\graphics\\renderer\\Shader.cpp",
+  "file": "C:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/src/graphics/renderer/Shader.cpp",
+  "output": "C:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/build/src/CMakeFiles/InteractiveGraphicsCourse.dir/graphics/renderer/Shader.cpp.obj"
+},
+{
+  "directory": "C:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -IC:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/src -IC:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/external/glad/include -IC:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/external/glfw/include -IC:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/external/glm/include -IC:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/external/glm -g -g -O0 -Wall -Werror -D_CRT_SECURE_NO_WARNINGS -DDEBUG -std=gnu++23 -o src\\CMakeFiles\\InteractiveGraphicsCourse.dir\\graphics\\renderer\\ShaderProgram.cpp.obj -c C:\\Users\\efcneumayer\\Documents\\introcg\\Interactive-Graphics\\src\\graphics\\renderer\\ShaderProgram.cpp",
+  "file": "C:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/src/graphics/renderer/ShaderProgram.cpp",
+  "output": "C:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/build/src/CMakeFiles/InteractiveGraphicsCourse.dir/graphics/renderer/ShaderProgram.cpp.obj"
+},
+{
+  "directory": "C:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -IC:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/src -IC:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/external/glad/include -IC:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/external/glfw/include -IC:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/external/glm/include -IC:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/external/glm -g -g -O0 -Wall -Werror -D_CRT_SECURE_NO_WARNINGS -DDEBUG -std=gnu++23 -o src\\CMakeFiles\\InteractiveGraphicsCourse.dir\\graphics\\renderer\\VertexArray.cpp.obj -c C:\\Users\\efcneumayer\\Documents\\introcg\\Interactive-Graphics\\src\\graphics\\renderer\\VertexArray.cpp",
+  "file": "C:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/src/graphics/renderer/VertexArray.cpp",
+  "output": "C:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/build/src/CMakeFiles/InteractiveGraphicsCourse.dir/graphics/renderer/VertexArray.cpp.obj"
+},
+{
+  "directory": "C:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -IC:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/src -IC:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/external/glad/include -IC:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/external/glfw/include -IC:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/external/glm/include -IC:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/external/glm -g -g -O0 -Wall -Werror -D_CRT_SECURE_NO_WARNINGS -DDEBUG -std=gnu++23 -o src\\CMakeFiles\\InteractiveGraphicsCourse.dir\\graphics\\renderer\\VertexBuffer.cpp.obj -c C:\\Users\\efcneumayer\\Documents\\introcg\\Interactive-Graphics\\src\\graphics\\renderer\\VertexBuffer.cpp",
+  "file": "C:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/src/graphics/renderer/VertexBuffer.cpp",
+  "output": "C:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/build/src/CMakeFiles/InteractiveGraphicsCourse.dir/graphics/renderer/VertexBuffer.cpp.obj"
+},
+{
+  "directory": "C:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/build",
   "command": "C:\\msys64\\mingw64\\bin\\g++.exe -IC:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/src -IC:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/external/glad/include -IC:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/external/glfw/include -IC:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/external/glm/include -IC:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/external/glm -g -g -O0 -Wall -Werror -D_CRT_SECURE_NO_WARNINGS -DDEBUG -std=gnu++23 -o src\\CMakeFiles\\InteractiveGraphicsCourse.dir\\main.cpp.obj -c C:\\Users\\efcneumayer\\Documents\\introcg\\Interactive-Graphics\\src\\main.cpp",
   "file": "C:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/src/main.cpp",
   "output": "C:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/build/src/CMakeFiles/InteractiveGraphicsCourse.dir/main.cpp.obj"

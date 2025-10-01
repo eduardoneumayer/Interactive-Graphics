@@ -119,6 +119,38 @@ build install/strip: phony CMakeFiles/install/strip.util
 
 build cmake_object_order_depends_target_InteractiveGraphicsCourse: phony || cmake_object_order_depends_target_glad cmake_object_order_depends_target_glfw cmake_object_order_depends_target_glm
 
+build src/CMakeFiles/InteractiveGraphicsCourse.dir/graphics/renderer/Shader.cpp.obj: CXX_COMPILER__InteractiveGraphicsCourse_unscanned_Debug C$:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/src/graphics/renderer/Shader.cpp || cmake_object_order_depends_target_InteractiveGraphicsCourse
+  CONFIG = Debug
+  DEP_FILE = src\CMakeFiles\InteractiveGraphicsCourse.dir\graphics\renderer\Shader.cpp.obj.d
+  FLAGS = -g -g -O0 -Wall -Werror -D_CRT_SECURE_NO_WARNINGS -DDEBUG -std=gnu++23
+  INCLUDES = -IC:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/src -IC:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/external/glad/include -IC:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/external/glfw/include -IC:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/external/glm/include -IC:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/external/glm
+  OBJECT_DIR = src\CMakeFiles\InteractiveGraphicsCourse.dir
+  OBJECT_FILE_DIR = src\CMakeFiles\InteractiveGraphicsCourse.dir\graphics\renderer
+
+build src/CMakeFiles/InteractiveGraphicsCourse.dir/graphics/renderer/ShaderProgram.cpp.obj: CXX_COMPILER__InteractiveGraphicsCourse_unscanned_Debug C$:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/src/graphics/renderer/ShaderProgram.cpp || cmake_object_order_depends_target_InteractiveGraphicsCourse
+  CONFIG = Debug
+  DEP_FILE = src\CMakeFiles\InteractiveGraphicsCourse.dir\graphics\renderer\ShaderProgram.cpp.obj.d
+  FLAGS = -g -g -O0 -Wall -Werror -D_CRT_SECURE_NO_WARNINGS -DDEBUG -std=gnu++23
+  INCLUDES = -IC:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/src -IC:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/external/glad/include -IC:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/external/glfw/include -IC:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/external/glm/include -IC:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/external/glm
+  OBJECT_DIR = src\CMakeFiles\InteractiveGraphicsCourse.dir
+  OBJECT_FILE_DIR = src\CMakeFiles\InteractiveGraphicsCourse.dir\graphics\renderer
+
+build src/CMakeFiles/InteractiveGraphicsCourse.dir/graphics/renderer/VertexArray.cpp.obj: CXX_COMPILER__InteractiveGraphicsCourse_unscanned_Debug C$:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/src/graphics/renderer/VertexArray.cpp || cmake_object_order_depends_target_InteractiveGraphicsCourse
+  CONFIG = Debug
+  DEP_FILE = src\CMakeFiles\InteractiveGraphicsCourse.dir\graphics\renderer\VertexArray.cpp.obj.d
+  FLAGS = -g -g -O0 -Wall -Werror -D_CRT_SECURE_NO_WARNINGS -DDEBUG -std=gnu++23
+  INCLUDES = -IC:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/src -IC:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/external/glad/include -IC:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/external/glfw/include -IC:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/external/glm/include -IC:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/external/glm
+  OBJECT_DIR = src\CMakeFiles\InteractiveGraphicsCourse.dir
+  OBJECT_FILE_DIR = src\CMakeFiles\InteractiveGraphicsCourse.dir\graphics\renderer
+
+build src/CMakeFiles/InteractiveGraphicsCourse.dir/graphics/renderer/VertexBuffer.cpp.obj: CXX_COMPILER__InteractiveGraphicsCourse_unscanned_Debug C$:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/src/graphics/renderer/VertexBuffer.cpp || cmake_object_order_depends_target_InteractiveGraphicsCourse
+  CONFIG = Debug
+  DEP_FILE = src\CMakeFiles\InteractiveGraphicsCourse.dir\graphics\renderer\VertexBuffer.cpp.obj.d
+  FLAGS = -g -g -O0 -Wall -Werror -D_CRT_SECURE_NO_WARNINGS -DDEBUG -std=gnu++23
+  INCLUDES = -IC:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/src -IC:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/external/glad/include -IC:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/external/glfw/include -IC:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/external/glm/include -IC:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/external/glm
+  OBJECT_DIR = src\CMakeFiles\InteractiveGraphicsCourse.dir
+  OBJECT_FILE_DIR = src\CMakeFiles\InteractiveGraphicsCourse.dir\graphics\renderer
+
 build src/CMakeFiles/InteractiveGraphicsCourse.dir/main.cpp.obj: CXX_COMPILER__InteractiveGraphicsCourse_unscanned_Debug C$:/Users/efcneumayer/Documents/introcg/Interactive-Graphics/src/main.cpp || cmake_object_order_depends_target_InteractiveGraphicsCourse
   CONFIG = Debug
   DEP_FILE = src\CMakeFiles\InteractiveGraphicsCourse.dir\main.cpp.obj.d
@@ -135,7 +167,7 @@ build src/CMakeFiles/InteractiveGraphicsCourse.dir/main.cpp.obj: CXX_COMPILER__I
 #############################################
 # Link the executable bin\Debug\InteractiveGraphicsCourse\InteractiveGraphicsCourse.exe
 
-build bin/Debug/InteractiveGraphicsCourse/InteractiveGraphicsCourse.exe: CXX_EXECUTABLE_LINKER__InteractiveGraphicsCourse_Debug src/CMakeFiles/InteractiveGraphicsCourse.dir/main.cpp.obj | bin/Debug/lib/libglad.a bin/Debug/lib/libglfw3.a bin/Debug/lib/libglm.a || bin/Debug/lib/libglad.a bin/Debug/lib/libglfw3.a bin/Debug/lib/libglm.a
+build bin/Debug/InteractiveGraphicsCourse/InteractiveGraphicsCourse.exe: CXX_EXECUTABLE_LINKER__InteractiveGraphicsCourse_Debug src/CMakeFiles/InteractiveGraphicsCourse.dir/graphics/renderer/Shader.cpp.obj src/CMakeFiles/InteractiveGraphicsCourse.dir/graphics/renderer/ShaderProgram.cpp.obj src/CMakeFiles/InteractiveGraphicsCourse.dir/graphics/renderer/VertexArray.cpp.obj src/CMakeFiles/InteractiveGraphicsCourse.dir/graphics/renderer/VertexBuffer.cpp.obj src/CMakeFiles/InteractiveGraphicsCourse.dir/main.cpp.obj | bin/Debug/lib/libglad.a bin/Debug/lib/libglfw3.a bin/Debug/lib/libglm.a || bin/Debug/lib/libglad.a bin/Debug/lib/libglfw3.a bin/Debug/lib/libglm.a
   CONFIG = Debug
   FLAGS = -g -g -O0 -Wall -Werror -D_CRT_SECURE_NO_WARNINGS -DDEBUG
   LINK_LIBRARIES = bin/Debug/lib/libglad.a  bin/Debug/lib/libglfw3.a  bin/Debug/lib/libglm.a  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
