@@ -1,14 +1,14 @@
 #include "VertexBuffer.hpp"
 #include <iostream>
 
-VBO::VBO(GLfloat* vertices, GLsizeiptr size)
+VBO::VBO(std::vector<float> vertices, GLsizeiptr size)
 {
     std::cout << "VBO Constructor called " << '\n';
     
     glGenBuffers(1, &ID);   // gerando o nosso vertex buffer object
     glBindBuffer(GL_ARRAY_BUFFER, ID);  // bindando o nosso VBO criado no target GLARRAYBUFFER
     // copiando os dados dos vertices a serem espelhados para o buffer criado anteriormente
-    glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, size, vertices.data(), GL_STATIC_DRAW);
 
 }
 

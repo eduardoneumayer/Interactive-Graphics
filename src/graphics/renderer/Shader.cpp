@@ -2,17 +2,31 @@
 #include <iostream>
 
 
-Shader::Shader()
+std::string loadFile(const char* filename)
+{
+	std::ifstream in(filename, std::ios::binary);
+	if (in)
+	{
+		std::string contents;
+		in.seekg(0, std::ios::end);
+		contents.resize(in.tellg());
+		in.seekg(0, std::ios::beg);
+		in.read(&contents[0], contents.size());
+		in.close();
+		return(contents);
+	}
+	throw(errno);
+}
+
+
+Shader::Shader(const char* vertexPath, const char* fragmentPath)
 {
     std::cout << "Shader called" << std::endl;
 
     //enquanto estamos fazendo tudo na main, armazenaremos o conteudo do vertex shader aqui.
-    const char *vertexShaderSource = "#version 330 core\n"
-    "layout (location = 0) in vec3 aPos;\n"
-    "void main()\n"
-    "{\n"
-    "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-    "}\0";
+
+    std::string vertexcode = loadFile(vertexPath);
+    const char* vertexShaderSource = vertexcode.c_str();
 
     unsigned int vertexShader;
     vertexShader = glCreateShader(GL_VERTEX_SHADER);    // cria um shader com o nome dado
@@ -34,12 +48,8 @@ Shader::Shader()
 
 
     // mesmo esquema de inicializacao para o fragment shader
-    const char *fragmentShaderSource = "#version 330 core\n"
-    "out vec4 FragColor;\n"
-    "void main()\n"
-    "{\n"
-    "   FragColor = vec4(1.0f, 0.5f, 1.2f, 1.0f);\n"
-    "}\0";
+    std::string fragmentcode = loadFile(fragmentPath);
+    const char* fragmentShaderSource = fragmentcode.c_str();
 
     unsigned int fragmentShader;
     fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
