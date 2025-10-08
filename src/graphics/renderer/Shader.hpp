@@ -5,7 +5,6 @@
 #include<sstream>
 #include<iostream>
 
-
 std::string loadFile(const char* filename);
 
 class Shader

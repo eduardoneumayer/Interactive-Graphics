@@ -5,13 +5,14 @@
 #include "graphics/renderer/Shader.hpp"
 #include "graphics/renderer/VertexBuffer.hpp"
 #include "graphics/renderer/VertexArray.hpp"
+#include "core/Camera.hpp"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
 
 // settings
-const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
+const unsigned int SCR_WIDTH = 1920;
+const unsigned int SCR_HEIGHT = 1080;
 
 
 std::optional<std::vector<float>> loadObjFile(const char * objFilePath)
@@ -104,17 +105,22 @@ int main()
     {
         vertices = loadobjectfile.value();
     }
+    vertices.shrink_to_fit();
 
     // inicializando e bindando vao
     VAO VAO;
     VAO.Bind();
 
+    std::cout << "Vertices.size(): " << vertices.size() << '\n';
     // inicializando e linkando vbo em vao
     VBO VBO1(vertices, vertices.size() * sizeof(float));
     VAO.LinkVBO(VBO1, 0);
 
     VAO.Unbind();
     VBO1.Unbind();
+
+    // Inicializando camera
+    Camera camera(SCR_WIDTH, SCR_HEIGHT, glm::vec3(0.0f, 0.0f, 2.0f));
 
     // render loop
     // -----------
@@ -131,8 +137,13 @@ int main()
         
         // ativa o shader program e desenha com o vao
         shaderProgram1.Activate();
+
+        camera.Matrix(60.0f, 0.1f, 100.0f, shaderProgram1, "camMatrix");
+        camera.processInputs(window);
+
         VAO.Bind();
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glPointSize(1.5f);
+        glDrawArrays(GL_POINTS, 0, vertices.size()*sizeof(float));
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
