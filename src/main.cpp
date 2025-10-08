@@ -122,6 +122,7 @@ int main()
     // Inicializando camera
     Camera camera(SCR_WIDTH, SCR_HEIGHT, glm::vec3(0.0f, 0.0f, 2.0f));
 
+    glPointSize(1.5f);
     // render loop
     // -----------
     while (!glfwWindowShouldClose(window))
@@ -142,8 +143,7 @@ int main()
         camera.processInputs(window);
 
         VAO.Bind();
-        glPointSize(1.5f);
-        glDrawArrays(GL_POINTS, 0, vertices.size()*sizeof(float));
+        glDrawArrays(GL_TRIANGLES, 0, vertices.size()*sizeof(float));
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
