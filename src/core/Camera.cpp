@@ -16,7 +16,7 @@ void Camera::Matrix(float FOVdeg, float nearPlane, float farPlane, Shader& shade
     // cria a matriz de visao da nossa camera
     view = glm::lookAt(cameraPos, cameraPos + cameraOrientation, Up);
     // cria a matriz de projeção da nossa camera
-    projection = glm::perspective(glm::radians(FOVdeg), float(width/height), nearPlane, farPlane * 100);
+    projection = glm::perspective(glm::radians(FOVdeg), float(width) / float(height), nearPlane, farPlane * 100);
     // envia matriz 4v4 pro shader (camMatrix)
     glUniformMatrix4fv(glGetUniformLocation(shader.ID, uniform), 1, GL_FALSE, glm::value_ptr(projection * view));
 
