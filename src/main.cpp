@@ -5,6 +5,8 @@
 #include "graphics/renderer/Shader.hpp"
 #include "graphics/renderer/VertexBuffer.hpp"
 #include "graphics/renderer/VertexArray.hpp"
+#include "graphics/renderer/ElementBuffer.hpp"
+#include "graphics/renderer/Load.hpp"
 #include "core/Camera.hpp"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -13,50 +15,6 @@ void processInput(GLFWwindow *window);
 // settings
 const unsigned int SCR_WIDTH = 1920;
 const unsigned int SCR_HEIGHT = 1080;
-
-
-std::optional<std::vector<float>> loadObjFile(const char * objFilePath)
-{
-    std::vector<float> vertices;
-
-    std::ifstream file;     //ifstream para leitura de arquivos
-    file.open(objFilePath);
-
-    if (!file.good())
-    {
-        std::cout << "FALHA AO ABRIR ARQUIVO OBJ" << std::endl;
-        return std::nullopt;
-    }
-    else
-    {
-        std::cout << "Abriu arquivo obj" << std::endl;
-    }
-
-    std::string line;
-    while (std::getline(file, line))
-    { 
-        std::string text;
-        file >> text;
-
-        if (text == "v")
-        {
-            float value;
-            file >> value;
-            vertices.emplace_back(value); // append da primeira coordenada do vertice
-
-            file >> value;
-            vertices.emplace_back(value); // segunda coordenada
-
-            file >> value;
-            vertices.emplace_back(value); // terceira coordenada
-        }
-        
-    }
-
-    return vertices;
-    
-}
-
 
 int main()
 {
@@ -95,17 +53,9 @@ int main()
     Shader shaderProgram1("shaders/shader.vert", "shaders/shader.frag");
     std::vector<float> vertices;
 
-    auto loadobjectfile = loadObjFile("resources/teapot.obj");
-
-    if (!loadobjectfile)
-    {
-        std::cout << "Failed to load OBJ file." << std::endl;
-    }
-    else
-    {
-        vertices = loadobjectfile.value();
-    }
-    vertices.shrink_to_fit();
+    Load load;
+    load.loadObjFile(vertices, "resources/teapot.obj");
+    load.triangleIndex.shrink_to_fit();
 
     // inicializando e bindando vao
     VAO VAO;
@@ -116,8 +66,12 @@ int main()
     VBO VBO1(vertices, vertices.size() * sizeof(float));
     VAO.LinkVBO(VBO1, 0);
 
+    // TO DO: ADICIONAR NA FUNCAO LOADOBJFILE OS INDICES DOS VERTICES 
+    EBO EBO( load.triangleIndex.data(),  load.triangleIndex.size() * sizeof(load.triangleIndex.front()) );
+
     VAO.Unbind();
     VBO1.Unbind();
+    EBO.unbindBuffer();
 
     // Inicializando camera
     Camera camera(SCR_WIDTH, SCR_HEIGHT, glm::vec3(0.0f, 0.0f, 2.0f));
@@ -139,11 +93,11 @@ int main()
         // ativa o shader program e desenha com o vao
         shaderProgram1.Activate();
 
-        camera.Matrix(60.0f, 0.1f, 100.0f, shaderProgram1, "camMatrix");
+        camera.Matrix(45.0f, 0.1f, 100.0f, shaderProgram1, "camMatrix");
         camera.processInputs(window);
 
         VAO.Bind();
-        glDrawArrays(GL_TRIANGLES, 0, vertices.size()*sizeof(float));
+        glDrawElements(GL_TRIANGLES, load.triangleIndex.size(), GL_UNSIGNED_INT, 0);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
