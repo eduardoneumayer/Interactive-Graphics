@@ -16,7 +16,7 @@ void Camera::Matrix(float FOVdeg, float nearPlane, float farPlane, Shader& shade
     // cria a matriz de visao da nossa camera
     view = glm::lookAt(cameraPos, cameraPos + cameraOrientation, Up);
     // cria a matriz de projeção da nossa camera
-    projection = glm::perspective(glm::radians(FOVdeg), (float)(width/height), nearPlane, farPlane);
+    projection = glm::perspective(glm::radians(FOVdeg), float(width/height), nearPlane, farPlane * 100);
     // envia matriz 4v4 pro shader (camMatrix)
     glUniformMatrix4fv(glGetUniformLocation(shader.ID, uniform), 1, GL_FALSE, glm::value_ptr(projection * view));
 
@@ -36,15 +36,16 @@ void Camera::processInputs(GLFWwindow* window)
 
     //UP AND DOWN
     if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
-        cameraPos += Up * speed;
+        cameraPos += speed * Up;
     if(glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
-        cameraPos += -Up*speed;
+        cameraPos += speed * -Up;
 
     // MOUSE INPUTS (ANGLES)
     if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
     {
         glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 
+        // previne o jump da camera no primeiro clique
         if (firstClick){
             glfwSetCursorPos(window, (width/2), (height/2));
             firstClick = false;
@@ -54,12 +55,15 @@ void Camera::processInputs(GLFWwindow* window)
         // pegando a posicao x e y do mouse naquele momento
         glfwGetCursorPos(window, &mouseX, &mouseY);
 
+        // Normalizes and shifts the coordinates of the cursor such that they begin in the middle of the screen
+        // and then "transforms" them into degrees
         float rotx = sensitivity * (float)(mouseY - (height/2)) / height;
         float roty = sensitivity * (float)(mouseX - (width/2)) / width;
 
+        // calcula mudança na orientacao
         glm::vec3 newOrientation = glm::rotate(cameraOrientation, glm::radians(-rotx), glm::normalize(glm::cross(cameraOrientation, Up)));
 
-        if(!(glm::angle(newOrientation, Up) <= glm::radians(5.0f) or (glm::angle(newOrientation, -Up) <= glm::radians(5.0f))))
+        if(abs(glm::angle(newOrientation, Up) - glm::radians(90.0f)) <= glm::radians(85.0f))
         {
             cameraOrientation = newOrientation;
         }
