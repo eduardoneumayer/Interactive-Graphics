@@ -1,13 +1,20 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
+#include <fstream>
+#include "graphics/renderer/Shader.hpp"
+#include "graphics/renderer/VertexBuffer.hpp"
+#include "graphics/renderer/VertexArray.hpp"
+#include "graphics/renderer/ElementBuffer.hpp"
+#include "graphics/renderer/Load.hpp"
+#include "core/Camera.hpp"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
 
 // settings
-const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
+const unsigned int SCR_WIDTH = 1920;
+const unsigned int SCR_HEIGHT = 1080;
 
 int main()
 {
@@ -42,98 +49,34 @@ int main()
         return -1;
     }    
 
+    // inicializando shaderProgram (seu construtor ja é inicializado junto com tudo que está nele)
+    Shader shaderProgram1("shaders/shader.vert", "shaders/shader.frag");
+    std::vector<float> vertices;
 
-    //enquanto estamos fazendo tudo na main, armazenaremos o conteudo do vertex shader aqui.
-    const char *vertexShaderSource = "#version 330 core\n"
-    "layout (location = 0) in vec3 aPos;\n"
-    "void main()\n"
-    "{\n"
-    "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-    "}\0";
+    Load load;
+    load.loadObjFile(vertices, "resources/teapot.obj");
+    load.triangleIndex.shrink_to_fit();
 
-    float vertices[] = {
-        0.5f, 0.5f, 0.0f,
-        0.5f, -0.5f, 0.0f,
-        -0.5f, 0.5f, 0.0f,
+    // inicializando e bindando vao
+    VAO VAO;
+    VAO.Bind();
 
-        // second triangle
-        0.3f, -0.5f, 0.0f,  // bottom right
-        -0.8f, -0.5f, 0.0f,  // bottom left
-        -0.8f,  0.5f, 0.0f   // top left
-    };
+    std::cout << "Vertices.size(): " << vertices.size() << '\n';
+    // inicializando e linkando vbo em vao
+    VBO VBO1(vertices, vertices.size() * sizeof(float));
+    VAO.LinkVBO(VBO1, 0);
 
-    unsigned int VBO;
-    glGenBuffers(1, &VBO);   // gerando o nosso vertex buffer object
+    // TO DO: ADICIONAR NA FUNCAO LOADOBJFILE OS INDICES DOS VERTICES 
+    EBO EBO( load.triangleIndex.data(),  load.triangleIndex.size() * sizeof(load.triangleIndex.front()) );
 
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);  // bindando o nosso VBO criado no target GLARRAYBUFFER
+    VAO.Unbind();
+    VBO1.Unbind();
+    EBO.unbindBuffer();
 
-    // copiando os dados dos vertices a serem espelhados para o buffer criado anteriormente
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    // Inicializando camera
+    Camera camera(SCR_WIDTH, SCR_HEIGHT, glm::vec3(0.0f, 0.0f, 2.0f));
 
-    unsigned int vertexShader;
-    vertexShader = glCreateShader(GL_VERTEX_SHADER);    // cria um shader com o nome dado
-
-    glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);     // coloca o conteudo do shader dentro do source criado
-
-    glCompileShader(vertexShader);    // compilar
-
-    // verificando se a instalacao obteve sucesso ou nao
-    int  success;
-    char infoLog[512];
-    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
-    
-    if(!success)
-    {
-        glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
-        std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
-    }
-
-
-    // mesmo esquema de inicializacao para o fragment shader
-    const char *fragmentShaderSource = "#version 330 core\n"
-    "out vec4 FragColor;\n"
-    "void main()\n"
-    "{\n"
-    "   FragColor = vec4(1.0f, 0.5f, 1.2f, 1.0f);\n"
-    "}\0";
-
-    unsigned int fragmentShader;
-    fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
-    glCompileShader(fragmentShader);
-
-    glGetProgramiv(fragmentShader, GL_LINK_STATUS, &success);
-    if(!success) {
-        glGetProgramInfoLog(fragmentShader, 512, NULL, infoLog);
-        std::cout << "ERROR::PROGRAM::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
-    }
-
-    // Shader program, linkando os dois shaders 
-    unsigned int shaderProgram;
-    shaderProgram = glCreateProgram();
-
-    // anexa (attach) os dois shaders e linka no shaderProgram
-    glAttachShader(shaderProgram, vertexShader);
-    glAttachShader(shaderProgram, fragmentShader);
-    glLinkProgram(shaderProgram);
-
-    glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
-    if(!success) {
-        glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
-        std::cout << "ERROR::PROGRAM::COMPILATION_FAILED\n" << infoLog << std::endl;
-    }
-
-    glUseProgram(shaderProgram);
-
-    // depois que linkamos os shaders no programa, podemos deletá-los.
-    glDeleteShader(vertexShader);
-    glDeleteShader(fragmentShader); 
-
-    //VAO
-    unsigned int VAO;
-    glGenVertexArrays(1, &VAO);
-
-
+    glPointSize(1.5f);
     // render loop
     // -----------
     while (!glfwWindowShouldClose(window))
@@ -146,21 +89,15 @@ int main()
         // ------
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
+        
+        // ativa o shader program e desenha com o vao
+        shaderProgram1.Activate();
 
-        // drawing
-        // -------
-        glBindVertexArray(VAO);
-        glBindBuffer(GL_ARRAY_BUFFER, VBO);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+        camera.Matrix(45.0f, 0.1f, 100.0f, shaderProgram1, "camMatrix");
+        camera.processInputs(window);
 
-        //dizer ao opengl como ele vai interpretar os dados dos vertices
-        glVertexAttribPointer(0,3,GL_FLOAT, GL_FALSE, 3*sizeof(float), (void*)0);
-        glEnableVertexAttribArray(0);
-
-        glUseProgram(shaderProgram);
-        glBindVertexArray(VAO);
-        glDrawArrays(GL_TRIANGLES, 0, 6);
-
+        VAO.Bind();
+        glDrawElements(GL_TRIANGLES, load.triangleIndex.size(), GL_UNSIGNED_INT, 0);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
@@ -170,6 +107,7 @@ int main()
 
     // glfw: terminate, clearing all previously allocated GLFW resources.
     // ------------------------------------------------------------------
+
     glfwTerminate();
     return 0;
 }
