@@ -10,6 +10,7 @@ void Load::loadObjFile(std::vector<float>& vertices, const char* objFilePath) {
 
         vertices.clear();
         triangleIndex.clear(); // Assumindo que triangleIndex é um std::vector<int> membro da classe
+        normal.clear();
 
         std::string line;
         while (std::getline(file, line)) {
@@ -24,6 +25,17 @@ void Load::loadObjFile(std::vector<float>& vertices, const char* objFilePath) {
                     vertices.push_back(x);
                     vertices.push_back(y);
                     vertices.push_back(z);
+                }
+            }
+
+            else if (type == "vn")
+            {
+                float xn, yn, zn;
+                if (iss >> xn >> yn >> zn)
+                {
+                    normal.push_back(xn);
+                    normal.push_back(yn);
+                    normal.push_back(zn);
                 }
             }
 

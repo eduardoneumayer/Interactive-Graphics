@@ -8,6 +8,7 @@
 #include "graphics/renderer/ElementBuffer.hpp"
 #include "graphics/renderer/Load.hpp"
 #include "core/Camera.hpp"
+#include "graphics/lightning/Light.hpp"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
@@ -50,9 +51,10 @@ int main()
     }    
 
     // inicializando shaderProgram (seu construtor ja é inicializado junto com tudo que está nele)
-    Shader shaderProgram1("shaders/shader.vert", "shaders/shader.frag");
+    Shader shaderProgram("shaders/shader.vert", "shaders/shader.frag");
     std::vector<float> vertices;
 
+    // Carregando arquivo obj com a classe load
     Load load;
     load.loadObjFile(vertices, "resources/teapot.obj");
     load.triangleIndex.shrink_to_fit();
@@ -66,7 +68,7 @@ int main()
     VBO VBO1(vertices, vertices.size() * sizeof(float));
     VAO.LinkVBO(VBO1, 0);
 
-    // TO DO: ADICIONAR NA FUNCAO LOADOBJFILE OS INDICES DOS VERTICES 
+    // inicializando EBO 
     EBO EBO( load.triangleIndex.data(),  load.triangleIndex.size() * sizeof(load.triangleIndex.front()) );
 
     VAO.Unbind();
@@ -91,9 +93,9 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT);
         
         // ativa o shader program e desenha com o vao
-        shaderProgram1.Activate();
+        shaderProgram.Activate();
 
-        camera.Matrix(45.0f, 0.1f, 100.0f, shaderProgram1, "camMatrix");
+        camera.Matrix(45.0f, 0.1f, 100.0f, shaderProgram, "camMatrix");
         camera.processInputs(window);
 
         VAO.Bind();
