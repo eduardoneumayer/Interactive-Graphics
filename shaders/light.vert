@@ -4,5 +4,5 @@ uniform mat4 camMatrix;
 uniform mat4 ulightPos;
 void main()
 {
-    gl_Position = normalize(camMatrix * ulightPos * vec4(aPos,1.0f));
+    gl_Position = camMatrix * ulightPos * vec4(aPos,1.0f);
 }

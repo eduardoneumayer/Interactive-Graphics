@@ -13,7 +13,7 @@ Light::Light()
     vao = std::make_shared<VAO>();      // make shared evita vazamento de memoria
     vao->Bind();
 
-    vbo = std::make_shared<VBO>(cubeVertices, GL_STATIC_DRAW);
+    vbo = std::make_shared<VBO>(cubeVertices, cubeVertices.size() * sizeof(float));
     vbo->Bind();
     vao->LinkVBO(*vbo, 0);
 
