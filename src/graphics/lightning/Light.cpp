@@ -6,8 +6,24 @@ Light::Light()
 {
     std::cout << "Light constructor called" << std::endl;
 
-    // TO DO: FINISH LIGHT CONSTRUCTOR
+    createCubeLight();
+    createCubeIndices();
 
+    // mesmo esquema de sempre, inicializa o vao, para os vertices para o vbo e indices para ebo, depois da o unbind
+    vao = std::make_shared<VAO>();      // make shared evita vazamento de memoria
+    vao->Bind();
+
+    vbo = std::make_shared<VBO>(cubeVertices, GL_STATIC_DRAW);
+    vbo->Bind();
+    vao->LinkVBO(*vbo, 0);
+
+    ebo = std::make_shared<EBO>(cubeIndices.data(), cubeIndices.size() * sizeof(cubeIndices.front()));      // esse sizeof pega o tamanho do primeiro elemento no vetor cubeIndices
+
+    std::cout << " Num de vertices do cubo = " << cubeVertices.size() / 3 << std::endl;
+
+    vao->Unbind();
+    vbo->Unbind();
+    ebo->unbindBuffer();
 
 }
 
@@ -57,6 +73,7 @@ void Light::createCubeIndices()
 {
     cubeIndices.clear();
 
+    // cada linha de push back define um triangulo, dois triangulos formam uma face
     // Face traseira (z-)
     cubeIndices.push_back(0); cubeIndices.push_back(1); cubeIndices.push_back(2);
     cubeIndices.push_back(2); cubeIndices.push_back(3); cubeIndices.push_back(0);
