@@ -16,8 +16,8 @@ class Camera
     public:
         glm::vec3 cameraPos;
         //we want the camera pointing to the origin
-        glm::vec3 cameraOrientation = glm::vec3(0.0f,0.0f,-1.0f);
-        glm::vec3 Up = glm::vec3(0.0f,1.0f,0.0f);
+        glm::vec3 cameraOrientation = glm::vec3(0.0f,1.0f,0.0f);
+        glm::vec3 Up = glm::vec3(0.0f,0.0f,1.0f);
 
         int width;
         int height;

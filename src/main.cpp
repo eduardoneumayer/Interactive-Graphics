@@ -54,6 +54,12 @@ int main()
     Shader shaderProgram("shaders/shader.vert", "shaders/shader.frag");
     std::vector<float> vertices;
 
+    // inicializando o light program 
+    Shader lightProgram("shaders/light.vert", "shaders/light.frag");
+    [[maybe_unused]] Light light;
+    glm::mat4 ulightPos = glm::mat4(1.0f);
+    glm::mat4 camMatrix(1.0f);
+
     // Carregando arquivo obj com a classe load
     Load load;
     load.loadObjFile(vertices, "resources/teapot.obj");
@@ -76,7 +82,7 @@ int main()
     EBO.unbindBuffer();
 
     // Inicializando camera
-    Camera camera(SCR_WIDTH, SCR_HEIGHT, glm::vec3(0.0f, 0.0f, 2.0f));
+    Camera camera(SCR_WIDTH, SCR_HEIGHT, glm::vec3(0.0f, -2.0f, 0.0f));
 
     glPointSize(1.5f);
     // render loop
@@ -100,6 +106,11 @@ int main()
 
         VAO.Bind();
         glDrawElements(GL_TRIANGLES, load.triangleIndex.size(), GL_UNSIGNED_INT, 0);
+
+        lightProgram.Activate();
+        camera.Matrix(45.0f, 0.1f, 100.0f, lightProgram, "camMatrix");
+        glUniformMatrix4fv(glGetUniformLocation(lightProgram.ID, "ulightPos"), 1, GL_FALSE, glm::value_ptr(ulightPos));
+        light.draw();
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
