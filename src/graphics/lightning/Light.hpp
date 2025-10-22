@@ -34,7 +34,7 @@ class Light
         float ambientIntensity = 0.1;       // controlar a luz do que nao ta sendo afetado diretamente
         float specularStrength = 0.9;
 
-        std::shared_ptr<VBO> vbopos;
+        std::shared_ptr<VBO> vbo;
         std::shared_ptr<VAO> vao;
         std::shared_ptr<EBO> ebo;
 
