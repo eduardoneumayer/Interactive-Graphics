@@ -72,7 +72,7 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath)
     glAttachShader(ID, fragmentShader);
     glLinkProgram(ID);
 
-    glGetProgramiv(ID, GL_LINK_STATUS, &success);
+    glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
     if(!success) {
         glGetProgramInfoLog(ID, 512, NULL, infoLog);
         std::cout << "ERROR::PROGRAM::COMPILATION_FAILED\n" << infoLog << std::endl;
@@ -95,4 +95,46 @@ void Shader::Activate()
 void Shader::Delete()
 {
     glDeleteProgram(ID);
+}
+
+void Shader::sendUniform(const char *uniformVariable,glm::mat4 &matrix)
+{
+    GLint uniformVarLoc = glGetUniformLocation(ID,uniformVariable);
+  
+    if (uniformVarLoc != -1){
+        glUniformMatrix4fv(uniformVarLoc, 1, GL_FALSE, glm::value_ptr(matrix));
+    } else{
+        std::cerr << "Uniform " << uniformVariable << " nao encontrado na pos: " << uniformVarLoc << std::endl;
+    }
+}
+
+void Shader::sendUniform(const char *uniformVariable, glm::mat3 &matrix)
+{
+    GLint uniformVarLoc = glGetUniformLocation(ID,uniformVariable);
+
+    if (uniformVarLoc != -1){
+        glUniformMatrix3fv(uniformVarLoc, 1, GL_FALSE, glm::value_ptr(matrix));
+    } else{
+        std::cerr << "Uniform " << uniformVariable << " nao encontrado na pos: " << uniformVarLoc << std::endl;
+    }
+}
+
+void Shader::sendUniform(const char *uniformVariable, float &vData)
+{
+    GLint uniformVarLoc = glGetUniformLocation(ID,uniformVariable);
+    if (uniformVarLoc != -1){
+        glUniform1f(uniformVarLoc,vData);
+    } else{
+        std::cerr << "Uniform " << uniformVariable << " nao encontrado na pos: " << uniformVarLoc << std::endl;
+    }
+}
+
+void Shader::sendUniform(const char *uniformVariable, glm::vec3 &vec)
+{
+    GLint uniformVarLoc = glGetUniformLocation(ID,uniformVariable);
+    if (uniformVarLoc != -1){
+        glUniform3fv(uniformVarLoc,1,&vec[0]);
+    } else{
+        std::cerr << "Uniform " << uniformVariable << " nao encontrado na pos: " << uniformVarLoc << std::endl;
+    }
 }

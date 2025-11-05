@@ -21,7 +21,7 @@ class Camera
 
         int width;
         int height;
-        float speed = 0.01f;
+        float speed = 0.1f;
         float sensitivity = 100.0f;
         bool firstClick = true;
 
@@ -30,7 +30,7 @@ class Camera
         Camera(int width, int height, glm::vec3 positions);
 
         //function that passes parameters of view and projections to the shader (capture the lookAt function)
-        void Matrix(float FOVdeg, float nearPlane, float farPlane, Shader& shader, const char* uniform);
+        void Matrix(float FOVdeg, float nearPlane, float farPlane, Shader& shader, const char* uniform, glm::mat4 &view,glm::mat4 &projection,  glm::mat4 &model);
 
         // get the inputs 
         void processInputs(GLFWwindow* window);
