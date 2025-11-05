@@ -54,12 +54,6 @@ int main()
     Shader shaderProgram("shaders/shader.vert", "shaders/shader.frag");
     std::vector<float> vertices;
 
-    // inicializando o light program 
-    Shader lightProgram("shaders/light.vert", "shaders/light.frag");
-    [[maybe_unused]] Light light;
-    glm::mat4 ulightPos = glm::mat4(1.0f);
-    glm::mat4 camMatrix(1.0f);
-
     // Carregando arquivo obj com a classe load
     Load load;
     load.loadObjFile(vertices, "resources/teapot.obj");
@@ -74,17 +68,35 @@ int main()
     VBO VBO1(vertices, vertices.size() * sizeof(float));
     VAO.LinkVBO(VBO1, 0);
 
+    // Cria o buffer com as normal que estarao no layout location 0 do vertex shader (VBO)
+    VBO VBOnormal(load.normal, load.normal.size() * sizeof(float));
+    VAO.LinkVBO(VBOnormal, 1);
+    std::cout << "Numero de Normais: " << load.normal.size()/3 << '\n';
+
     // inicializando EBO 
     EBO EBO( load.triangleIndex.data(),  load.triangleIndex.size() * sizeof(load.triangleIndex.front()) );
 
     VAO.Unbind();
     VBO1.Unbind();
+    VBOnormal.Unbind();
     EBO.unbindBuffer();
+
+    // inicializando o light program 
+    Shader lightProgram("shaders/light.vert", "shaders/light.frag");
+    [[maybe_unused]] Light light;
+    glm::mat4 ulightPos = glm::mat4(1.0f);
+    glm::mat4 camMatrix(1.0f);
+
+
+    glm::mat4 objPos = glm::mat4(1.0f);
+    // objPos = glm::translate(objPos,glm::vec3(0.0, 0.0, -10.0));
+    objPos = glm::rotate(objPos, glm::radians(-90.0f),glm::vec3(1.0, 0.0, 0.0));
+    objPos = glm::scale(objPos, glm::vec3(0.5, 0.5, 0.5));
 
     // Inicializando camera
     Camera camera(SCR_WIDTH, SCR_HEIGHT, glm::vec3(0.0f, -2.0f, 0.0f));
 
-    glPointSize(1.5f);
+    glEnable(GL_DEPTH_TEST);
     // render loop
     // -----------
     while (!glfwWindowShouldClose(window))
@@ -93,23 +105,45 @@ int main()
         // -----
         processInput(window);
 
+        glm::mat4 model(1.0f);
+        glm::mat4 view(1.0f);
+        glm::mat4 projection(1.0f);
+
+
         // render
         // ------
-        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
-        
+        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);    
+        glClear(GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT);
+
         // ativa o shader program e desenha com o vao
         shaderProgram.Activate();
 
-        camera.Matrix(45.0f, 0.1f, 100.0f, shaderProgram, "camMatrix");
+        camera.Matrix(45.0f, 0.1f, 100.0f, shaderProgram, "camMatrix", view, projection, model);
         camera.processInputs(window);
+
+        auto modelView = view * model;
+        shaderProgram.sendUniform("modelView", modelView); 
+    
+        glm::mat3 normalMatrix = glm::inverse((glm::transpose(glm::mat3(view * model))));
+        shaderProgram.sendUniform("normalMatrix", normalMatrix);
+
+        light.lightSource = glm::vec4(light.lightSource, 1.0f);
+
+        shaderProgram.sendUniform("ulightPos", light.lightSource);
+        shaderProgram.sendUniform("uLightIntensity", light.intensity);
+        shaderProgram.sendUniform("uAmbientStrength", light.ambientIntensity);
+        shaderProgram.sendUniform("uSpecularStrength", light.specularStrength);
+        // shaderProgram.sendUniform("objPos", objPos);
+
+        glPointSize(1.5f);
+
+        glm::mat4 camMatrixLight = projection * view * model;
 
         VAO.Bind();
         glDrawElements(GL_TRIANGLES, load.triangleIndex.size(), GL_UNSIGNED_INT, 0);
-
         lightProgram.Activate();
-        camera.Matrix(45.0f, 0.1f, 100.0f, lightProgram, "camMatrix");
-        glUniformMatrix4fv(glGetUniformLocation(lightProgram.ID, "ulightPos"), 1, GL_FALSE, glm::value_ptr(ulightPos));
+        lightProgram.sendUniform("camMatrix", camMatrixLight);
+        lightProgram.sendUniform("model", ulightPos);
         light.draw();
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)

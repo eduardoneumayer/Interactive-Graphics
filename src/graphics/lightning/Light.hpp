@@ -18,21 +18,20 @@ class Light
     public:
         Light();
         ~Light();
-
         void draw() const;
 
         void createCubeLight();
         void createCubeIndices(); 
 
-        glm::vec3 lightSource = glm::vec3(0.0f, 20.0f, 3.0f);       // aonde o cubo de luz vai se localizar
+        glm::vec3 lightSource = glm::vec3(0.0f, 50.0f, 20.0f);       // aonde o cubo de luz vai se localizar
 
-        float cubeSize = 1.0f;
+        float cubeSize = 2.0f;
         std::vector<float> cubeVertices;
         std::vector<int> cubeIndices;
 
-        float intensity = 0.5;
-        float ambientIntensity = 0.1;       // controlar a luz do que nao ta sendo afetado diretamente
-        float specularStrength = 0.9;
+        float intensity = 0.7f;
+        float ambientIntensity = 0.1f;       // controlar a luz do que nao ta sendo afetado diretamente
+        float specularStrength = 0.9f;
 
         std::shared_ptr<VBO> vbo;
         std::shared_ptr<VAO> vao;
