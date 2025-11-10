@@ -97,7 +97,10 @@ void Shader::Delete()
     glDeleteProgram(ID);
 }
 
-void Shader::sendUniform(const char *uniformVariable,glm::mat4 &matrix)
+
+// SEND UNIFORMS, MANDA PARA O SHADER NO FORMATO DESEJADO PELA VARIÁVEL
+
+void Shader::sendUniform(const char *uniformVariable,glm::mat4 &matrix)         //MAT4
 {
     GLint uniformVarLoc = glGetUniformLocation(ID,uniformVariable);
   
@@ -108,7 +111,7 @@ void Shader::sendUniform(const char *uniformVariable,glm::mat4 &matrix)
     }
 }
 
-void Shader::sendUniform(const char *uniformVariable, glm::mat3 &matrix)
+void Shader::sendUniform(const char *uniformVariable, glm::mat3 &matrix)        //MAT3
 {
     GLint uniformVarLoc = glGetUniformLocation(ID,uniformVariable);
 
@@ -119,17 +122,17 @@ void Shader::sendUniform(const char *uniformVariable, glm::mat3 &matrix)
     }
 }
 
-void Shader::sendUniform(const char *uniformVariable, float &vData)
+void Shader::sendUniform(const char *uniformVariable, float &vData)         //FLOAT
 {
-    GLint uniformVarLoc = glGetUniformLocation(ID,uniformVariable);
+    GLint uniformVarLoc = glGetUniformLocation(ID, uniformVariable);
     if (uniformVarLoc != -1){
         glUniform1f(uniformVarLoc,vData);
     } else{
         std::cerr << "Uniform " << uniformVariable << " nao encontrado na pos: " << uniformVarLoc << std::endl;
     }
 }
-
-void Shader::sendUniform(const char *uniformVariable, glm::vec3 &vec)
+ 
+void Shader::sendUniform(const char *uniformVariable, glm::vec3 &vec)       //VEC3
 {
     GLint uniformVarLoc = glGetUniformLocation(ID,uniformVariable);
     if (uniformVarLoc != -1){

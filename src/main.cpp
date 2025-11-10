@@ -118,6 +118,7 @@ int main()
         // ativa o shader program e desenha com o vao
         shaderProgram.Activate();
 
+    
         camera.Matrix(45.0f, 0.1f, 100.0f, shaderProgram, "camMatrix", view, projection, model);
         camera.processInputs(window);
 

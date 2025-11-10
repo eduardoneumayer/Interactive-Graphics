@@ -8,7 +8,6 @@ out vec3 Normal;
 out vec3 lightPos;
 
 uniform mat4 camMatrix;
-uniform mat4 objPos;
 uniform vec3 ulightPos;
 
 uniform mat4 modelView;
@@ -20,5 +19,5 @@ void main()
     Normal = normalMatrix * aNormal;
     lightPos = vec3(modelView * vec4(ulightPos, 1.0));
     gl_Position = camMatrix * vec4(pos, 1);
-    objectColor = vec3(0.0f,0.0f,1.0f);
+    objectColor = vec3(1.0f,0.0f,0.0f);
 }
