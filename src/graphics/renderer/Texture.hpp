@@ -16,7 +16,7 @@ class Texture
         void setParameters();
         void sendImageData();
 
-        std::string textureFilePath;
+        std::string textureFilepath ;
         int imageWidth;
         int imageHeight;
         int nrChannels;

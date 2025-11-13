@@ -11,6 +11,8 @@ target_include_directories(${PROJECT_NAME} PRIVATE
     ${GLAD_ROOT_DIR}/include
     ${GLFW_ROOT_DIR}/include
     ${GLM_ROOT_DIR}/include
+    ${ASSIMP_ROOT_DIR}/include
+    ${STB_IMAGE_ROOT_DIR}
 )
 
 # External dependencies libs
@@ -18,6 +20,8 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     glad
     glfw
     glm
+    assimp
+    stb_image
 )
 
 add_custom_command(

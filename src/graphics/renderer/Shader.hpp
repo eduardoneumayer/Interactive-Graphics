@@ -27,6 +27,7 @@ class Shader
         void sendUniform(const char * uniformVariable, glm::mat3 &matrix3);
         void sendUniform(const char * uniformVariable, float &vData);
         void sendUniform(const char * uniformVariable, glm::vec3 &vec);
+        void sendUniform(const char * uniformVariable, int value);
         
         void Activate();
         void Delete();

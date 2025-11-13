@@ -15,7 +15,7 @@ Light::Light()
 
     vbo = std::make_shared<VBO>(cubeVertices, cubeVertices.size() * sizeof(float));
     vbo->Bind();
-    vao->LinkVBO(*vbo, 0);
+    vao->LinkVBO(*vbo, 0, 0, 3);
 
     ebo = std::make_shared<EBO>(cubeIndices.data(), cubeIndices.size() * sizeof(cubeIndices.front()));      // esse sizeof pega o tamanho do primeiro elemento no vetor cubeIndices
 

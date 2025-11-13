@@ -10,7 +10,7 @@ class VAO
         VAO();
         ~VAO();
 
-        void LinkVBO(VBO VBO, GLuint layout);
+        void LinkVBO(VBO VBO, GLuint layout, GLuint mult, GLuint dimension);
         void Bind();
         void Unbind();
         void Delete();

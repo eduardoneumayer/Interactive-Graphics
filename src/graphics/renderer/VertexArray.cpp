@@ -12,10 +12,10 @@ VAO::~VAO()
         std::cout << "VAO Destructor called " << '\n';
 }
 
-void VAO::LinkVBO(VBO VBO, GLuint layout)
+void VAO::LinkVBO(VBO VBO, GLuint layout, GLuint mult, GLuint dimension)
 {
     VBO.Bind();
-    glVertexAttribPointer(layout,3,GL_FLOAT, GL_FALSE,  0, (void*)0);
+    glVertexAttribPointer(layout, dimension , GL_FLOAT, GL_FALSE,  0, (void*)(mult * sizeof(float)));
     glEnableVertexAttribArray(layout);
     VBO.Unbind();
 }
