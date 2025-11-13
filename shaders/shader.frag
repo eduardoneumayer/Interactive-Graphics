@@ -5,10 +5,13 @@ in vec3 objectColor;
 in vec3 Normal;
 in vec3 FragPos;
 in vec3 lightPos;
+in vec2 TexCoord;
 
 uniform float uLightIntensity;
 uniform float uAmbientStrength;
-uniform float uSpecularStrength; // ainda não usado
+uniform float uSpecularStrength; 
+
+uniform sampler2D tex;
 
 void main()
 {
@@ -28,6 +31,9 @@ void main()
     float spec = pow(max(dot(norm, H), 0.0), 64);
     vec3 specular = uSpecularStrength * spec * lightColor;
 
+    // Texture
+    vec3 texColor = texture(tex, TexCoord).rgb;
+
     vec3 result = uLightIntensity * ( (ambient + diffuse + specular) * objectColor );
-    color = vec4(result, 1.0f);
+    color = vec4(result * texColor, 1.0f);
 }

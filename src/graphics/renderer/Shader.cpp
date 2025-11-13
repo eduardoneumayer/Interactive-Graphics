@@ -107,7 +107,7 @@ void Shader::sendUniform(const char *uniformVariable,glm::mat4 &matrix)         
     if (uniformVarLoc != -1){
         glUniformMatrix4fv(uniformVarLoc, 1, GL_FALSE, glm::value_ptr(matrix));
     } else{
-        std::cerr << "Uniform " << uniformVariable << " nao encontrado na pos: " << uniformVarLoc << std::endl;
+        //std::cerr << "Uniform " << uniformVariable << " nao encontrado na pos: " << uniformVarLoc << std::endl;
     }
 }
 
@@ -118,7 +118,7 @@ void Shader::sendUniform(const char *uniformVariable, glm::mat3 &matrix)        
     if (uniformVarLoc != -1){
         glUniformMatrix3fv(uniformVarLoc, 1, GL_FALSE, glm::value_ptr(matrix));
     } else{
-        std::cerr << "Uniform " << uniformVariable << " nao encontrado na pos: " << uniformVarLoc << std::endl;
+        //std::cerr << "Uniform " << uniformVariable << " nao encontrado na pos: " << uniformVarLoc << std::endl;
     }
 }
 
@@ -127,8 +127,8 @@ void Shader::sendUniform(const char *uniformVariable, float &vData)         //FL
     GLint uniformVarLoc = glGetUniformLocation(ID, uniformVariable);
     if (uniformVarLoc != -1){
         glUniform1f(uniformVarLoc,vData);
-    } else{
-        std::cerr << "Uniform " << uniformVariable << " nao encontrado na pos: " << uniformVarLoc << std::endl;
+    } else{  
+       // std::cerr << "Uniform " << uniformVariable << " nao encontrado na pos: " << uniformVarLoc << std::endl;
     }
 }
  
@@ -138,6 +138,16 @@ void Shader::sendUniform(const char *uniformVariable, glm::vec3 &vec)       //VE
     if (uniformVarLoc != -1){
         glUniform3fv(uniformVarLoc,1,&vec[0]);
     } else{
-        std::cerr << "Uniform " << uniformVariable << " nao encontrado na pos: " << uniformVarLoc << std::endl;
+        //std::cerr << "Uniform " << uniformVariable << " nao encontrado na pos: " << uniformVarLoc << std::endl;
+    }
+}
+
+void Shader::sendUniform(const char *uniformVariable, int value)
+{
+    GLint uniformVarLoc = glGetUniformLocation(ID, uniformVariable);
+    if (uniformVarLoc != -1){
+        glUniform1i(uniformVarLoc,value);
+    } else{
+        //std::cerr << "Uniform " << uniformVariable << " nao encontrado na pos: " << uniformVarLoc << std::endl;
     }
 }
