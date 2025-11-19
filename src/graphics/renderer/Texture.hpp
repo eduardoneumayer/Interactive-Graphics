@@ -6,10 +6,10 @@
 class Texture
 {
     public:
-        Texture(const std::string &textureFile);
+        Texture(std::vector<std::string> faces);
         ~Texture();
         GLuint ID;
-
+        
         void Bind();
         void unBind();
 
