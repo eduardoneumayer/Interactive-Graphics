@@ -8,7 +8,7 @@ out vec3 objectColor;
 out vec3 FragPos;
 out vec3 Normal;
 out vec3 lightPos;
-out vec2 TexCoord;
+//out vec2 TexCoord;
 
 uniform mat4 camMatrix;
 uniform vec3 ulightPos;
@@ -23,5 +23,5 @@ void main()
     lightPos = vec3(modelView * vec4(ulightPos, 1.0));
     gl_Position = camMatrix * vec4(pos, 1);
     objectColor = vec3(1.0f,0.0f,0.0f);
-    TexCoord = aTexCoord;
+    //TexCoord = aTexCoord;
 }

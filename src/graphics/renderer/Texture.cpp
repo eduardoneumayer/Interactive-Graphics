@@ -3,7 +3,7 @@
 #include "stb_image.h"
 #include <iostream>
 
-Texture::Texture(const std::string &textureFile)
+Texture::Texture(std::vector<std::string> faces)
 {
     std::cout << "Texture constructor called!" << std::endl;
 
@@ -11,22 +11,30 @@ Texture::Texture(const std::string &textureFile)
     Bind();             // bind para alterações
     setParameters();    // setar parametros da textura
 
-    // carregar texture file
-    imageData = stbi_load(textureFile.c_str(), &imageWidth, &imageHeight, &nrChannels, 0);
 
-    if(imageData)
+    for (unsigned int i = 0; i < faces.size(); i++)
     {
-        std::cout << "Texture: " << textureFile << " loaded" << std::endl;
-        sendImageData();        // chama a função que manda os dados da textura
+        unsigned char *data = stbi_load(faces[i].c_str(), &imageWidth, &imageHeight, &nrChannels, 0);
+        if (data)
+        {
 
-        glGenerateMipmap( GL_TEXTURE_2D );      
+            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 
+                         0, GL_RGB, imageWidth, imageHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, data
+            );
 
-        stbi_image_free(imageData);     // free na memória depois de usar
+            glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
+
+            std::cout << "Cubemap skybox: " << faces[i] << " loaded!" << std::endl;
+
+            stbi_image_free(data);
+        }
+        else
+        {
+            std::cout << "Cubemap tex failed to load at path: " << faces[i] << std::endl;
+            stbi_image_free(data);
+        }
     }
-    else
-    {
-        std::cout << "failed loading texture" << std::endl;
-    }
+
 }
 
 // DESTRUTOR, BIND E UNBIND PADROES
@@ -35,7 +43,7 @@ Texture::~Texture()
 {
     std::cout << "Texture destructor called!" << std::endl;
     glDeleteTextures(1, &ID);
-}
+}  
 
 void Texture::Bind()
 {
