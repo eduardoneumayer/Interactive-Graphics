@@ -100,7 +100,7 @@ int main()
 
 
     // inicializando e bindando vao 
-    VAO VAO;
+    VAO VAO; 
     VAO.Bind();
 
     // inicializando e linkando vbo em vao
@@ -144,6 +144,9 @@ int main()
 
     // shaderProgram.Activate();
     //shaderProgram.sendUniform("tex", 0);
+        
+    float refl = 1.0f;   // pode testar 0.7, 0.5 etc
+    int skyboxUnit = 0;
 
     glEnable(GL_DEPTH_TEST);
     // render loop 
@@ -180,6 +183,14 @@ int main()
         shaderProgram.sendUniform("uLightIntensity", light.intensity);
         shaderProgram.sendUniform("uAmbientStrength", light.ambientIntensity);
         shaderProgram.sendUniform("uSpecularStrength", light.specularStrength);
+
+        // --- NOVO: uniformes para reflexão ---
+        glm::vec3 camPos = camera.cameraPos;
+        shaderProgram.sendUniform("cameraPos", camPos);
+        shaderProgram.sendUniform("skybox", skyboxUnit);
+        shaderProgram.sendUniform("reflectivity", refl);
+
+
         // shaderProgram.sendUniform("objPos", objPos);
 
         glPointSize(1.5f);
@@ -213,12 +224,10 @@ int main()
                         glm::radians(90.0f),
                         glm::vec3(1.0f, 0.0f, 0.0f));   
 
-        viewSky = viewSky * skyboxRot;
+        viewSky = viewSky * skyboxRot; 
 
         skyboxShader.sendUniform("view", viewSky);
         skyboxShader.sendUniform("projection", projection);
-
-
 
         VAO_map.Bind();
         glActiveTexture(GL_TEXTURE0);
