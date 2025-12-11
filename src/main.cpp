@@ -54,6 +54,44 @@ int main()
     Shader shaderProgram("shaders/shader.vert", "shaders/shader.frag");
     std::vector<float> vertices;
 
+    // Comecar carregando todos os dados do PLANO
+
+    std::vector<float> planeVertices = {
+    // positions                 
+    -50.0f, -50.0f,  0.0f,   
+     50.0f, -50.0f,  0.0f,    
+     50.0f, 50.0f,  0.0f,
+    -50.0f, 50.0f,  0.0f,
+    };
+
+    std::vector<float> planeNormals = {
+        0.0f, 1.0f, 0.0f, 
+        0.0f, 1.0f, 0.0f, 
+        0.0f, 1.0f, 0.0f, 
+        0.0f, 1.0f, 0.0f
+    };
+
+    std::vector<int> planeIndices = {
+    0, 1, 2,
+    0, 2, 3
+    };
+
+    VAO planeVAO;
+    planeVAO.Bind();
+
+    VBO planeVBO(planeVertices, planeVertices.size() * sizeof(float));
+    planeVAO.LinkVBO(planeVBO, 0);
+
+    VBO planenormalsVBO(planeNormals, planeNormals.size() * sizeof(float));
+    planeVAO.LinkVBO(planenormalsVBO, 1);
+
+    EBO planeEBO(planeIndices.data(), planeIndices.size() * sizeof(planeIndices.front()) );
+
+    planeVAO.Unbind();
+    planeVBO.Unbind();
+    planenormalsVBO.Unbind();
+    planeEBO.unbindBuffer();
+
     // Carregando arquivo obj com a classe load
     Load load;
     load.loadObjFile(vertices, "resources/teapot.obj");
@@ -112,7 +150,7 @@ int main()
 
         // render
         // ------
-        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);    
+        glClearColor(1.0f, 1.0f, 1.0f, 1.0f);    
         glClear(GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT);
 
         // ativa o shader program e desenha com o vao
@@ -139,6 +177,8 @@ int main()
 
         glm::mat4 camMatrixLight = projection * view * model;
 
+        planeVAO.Bind();
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         VAO.Bind();
         glDrawElements(GL_TRIANGLES, load.triangleIndex.size(), GL_UNSIGNED_INT, 0);
         lightProgram.Activate();
